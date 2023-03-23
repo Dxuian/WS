@@ -1,5 +1,7 @@
 GET http://localhost:5000/items HTTP/1.1
 ###testing query
 GET http://localhost:5000/items?name=unnat&ln=4 HTTP/1.1;
+### testing q but working 
+GET http://localhost:5000/items?name=unnat&ln=5 HTTP/1.1;
 
 

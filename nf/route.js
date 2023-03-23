@@ -3,12 +3,13 @@ const url = require("url");
 
 function routes(fastify,opts, done)
 {
-    fastify.get('/items/', (req, reply) => {
+    fastify.get('/items*', (req, reply) => {
         var holder = url.parse(req.url, true)
+        fastify.log.info(" ####") ; 
         fastify.log.info(holder.search);
         if (holder.search == "?name=unnat&ln=4") {
             fastify.log.info("h4321");
-            reply.send({ test: 'failed' });
+            reply.send({ test: 'failed but working' });
         }
         else if (holder.search == "?name=unnat&ln=5") {
             fastify.log.info(data);
