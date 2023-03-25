@@ -12,11 +12,13 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/swagger-ui": "^1.5.0",
+    "@fastify/websocket": "^7.1.3",
     "fastify": "^4.15.0"
   },
   "devDependencies": {
     "@fastify/static": "^6.9.0",
     "@fastify/swagger": "^8.3.1",
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.21",
+    "pino-pretty": "^10.0.0"
   }
 }
