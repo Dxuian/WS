@@ -1,8 +1,10 @@
-
-var socket;
+var socket = new WebSocket("ws://127.0.0.1:5000/ws");
 try {
     socket.addEventListener("open", (event) => {
-        socket.send({ text: "Hello Server!", textarea: k });
+        socket.send({ text: "Hello Server!", textarea: 123 });
+        document.getElementsByTagName("body")[0].style.background="green"
+
+
     });
 } catch (error) {
     console.log(error);
@@ -11,8 +13,11 @@ try {
 function change() {
     try {
         var k = document.getElementById("one").value
+        socket.send(k)
+        document.getElementsByTagName("body")[0].style.background="pink"
+
     // Create WebSocket connection.
-    socket = new WebSocket("http://127.0.0.1:5000");
+    
     // Connection opened
     } catch (error) {
         console.log(error);
@@ -22,6 +27,8 @@ function change() {
 }
 // Listen for messages
 socket.addEventListener("message", (event) => {
+    document.getElementsByTagName("body")[0].style.background="purple"
+
     console.log("Message from server ", event.data);
-    document.getElementById("one").value = event.data
+    document.getElementById("two").value = event.data
 });

@@ -5,9 +5,8 @@ const logger = pino({
     target: 'pino-pretty',
     options: {
       colorize: true,
-      ignore: "reqId,responseTime"
+      ignore: "reqId,responseTime,req"
     }
-
   }
 })
 const fastify = require('fastify')({
