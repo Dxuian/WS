@@ -1,3 +1,9 @@
+
+###ws testing
+GET http://localhost:5000/ws HTTP/1.1
+
+
+###OG
 GET http://localhost:5000/items HTTP/1.1
 ###testing query
 GET http://localhost:5000/items?name=unnat&ln=4 HTTP/1.1;
@@ -24,8 +30,8 @@ Content-Type: application/json
 {
     "key":300 
 }
-
-GET http://localhost:5000/test1 HTTP/1.1
+###testing serving
+GET ws://localhost:5000/test1 HTTP/1.1
 
 
 

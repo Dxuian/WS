@@ -30,8 +30,29 @@ fastify.register(require('@fastify/swagger-ui'), {
   transformSpecification: (swaggerObject, request, reply) => { return swaggerObject },
   transformSpecificationClone: true
 })
-fastify.register(require("./route.js"));
+
 var data = require("./data.js");
+const path = require('path')
+fastify.register(require('@fastify/static'), {
+  root: path.join(__dirname, 'public'),
+  prefix: '/public/', // optional: default '/'
+})
+
+
+
+fastify.register(require('@fastify/websocket'), {
+  options: { maxPayload: 1048576 }
+})
+// fastify.register(async function (fastify) {
+//   fastify.get('/ws', { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
+//     connection.socket.on('message', message => {
+//       // message.toString() === 'hi from client'
+//       connection.socket.send('hi from server')
+//     })
+//   })
+// })
+fastify.register(require("./route.js"));
+
 
 
 

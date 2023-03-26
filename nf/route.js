@@ -1,7 +1,7 @@
 var data = require("./data.js");
 const url = require("url");
 
-function routes(fastify, opts, done) {
+async function routes(fastify, opts, done) {
     fastify.get('/items*', (req, reply) => {
         var holder = url.parse(req.url, true)
         fastify.log.info(" ####");
@@ -23,9 +23,11 @@ function routes(fastify, opts, done) {
     fastify.get("/items/:id", (req, res) => {
         var ide = Number((req.params.id)[1]), k;
         fastify.log.info(ide);
-        if (ide == 4) { k = data.innerdata 
-            fastify.log.info("#123123");}
-        
+        if (ide == 4) {
+            k = data.innerdata
+            fastify.log.info("#123123");
+        }
+
 
 
         res.send({ variable: k });
@@ -68,14 +70,43 @@ function routes(fastify, opts, done) {
     }
     )
     fastify.get("/test1", (req, res) => {
-        try{res.sendFile("static.html")}
-        catch (err)
-        {
-            log.info("couldntdoit")
+        try {
+            fastify.log.info("ok it works fine \n")
+            res.sendFile("static.html")
+        }
+        catch (err) {
+            fastify.log.info(err)
         }
     })
+    fastify.get('/ws', { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
+
+        connection.socket.on('message', message => {
+            // message.toString() === 'hi from client'
+            const decoder = new TextDecoder('utf-8');
+             const text = decoder.decode(message);
+             fastify.log.info(text)
+            try {
+                connection.socket.send('hi from server')
+                fastify.log.info("message sent")
+            }
+            catch (err) {
+                fastify.log.info(err)
+            }
+        })
+    })
+
 
     done();
+    // async function routes(fastify,opts,done) {
+    //     await fastify.get('/*', { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
+    //       connection.socket.on('message', message => {
+    //         // message.toString() === 'hi from client'
+    //         fastify;
+    //         connection.socket.send('hi from wildcard route')
+    //       })
+    //       done()
+    //     })}
 
 }
+
 module.exports = routes; 
