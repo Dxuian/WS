@@ -46,7 +46,22 @@ async function routes(fastify, opts, done) {
             else if (text = playertype) { sendmsg(playertype, nottoself, wsh) }
             else if (text == (end, statsofall)) { sendmsg(calculatewinner(message)), toall, wsh }
             else if (text = rematch) { sendmsg({ clrall, timerstart }, toall, wsh) }
-            else if (text = close) { listofconnections.delete }
+            else if (text = closelobby) { listofconnections.delete
+            for (const x  of listofconnections) {
+                if(connection == x.connect)
+                {
+                    hold = x ; 
+                    break ; 
+                }                
+            }
+            for (const y of listofconnections) {
+                if(hold.lobbycodes = y.lobbycodes)
+                {
+                    y.connect.close() ; 
+                }
+            }
+
+            }
         })
     })
     done();
@@ -75,8 +90,6 @@ function calculatewinner(message) {
             }
           }
         return minIndex
-
-
     }
     // Convert Set to Array
     var myArray = Array.from(setholder);
