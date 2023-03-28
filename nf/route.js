@@ -28,7 +28,7 @@ async function routes(fastify, opts, done) {
                     break;
                 }
             }
-            sendmsg(removeplayer, toall, null)
+            sendmsg({info:removeplayer}, toall, null)
         })
         connection.on("message", (message) => {
             if (text == start) {
@@ -124,7 +124,7 @@ function calculatewinner(message) {
                 minIndex = i;
             }
         }
-        return minIndex
+        return (minIndex + "is the winner")
     }
     // Convert Set to Array
     var myArray = Array.from(setholder);
