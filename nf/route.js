@@ -8,11 +8,13 @@ async function routes(fastify, opts, done) {
         var afl = req.params.wildcard;
         if (afl.length > 3) {
             var buffer = "ws:://localhost:5000/ws/" + afl
-            res.redirect(buffer)
+            res.send({ file: "prac.html", lobbycode: afl, wscode: buffer })
+
         }
         else {
             var randlobbycode = uuidv4()
-            res.send({ file: "prac.html", lobbycode: randlobbycode })
+            var buffer = "ws:://localhost:5000/ws/" + randlobbycode
+            res.send({ file: "prac.html", lobbycode: randlobbycode, wscode: randlobbycode })
         }
     })
     fastify.get("/ws/:lobbycode", { WebSocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
@@ -37,37 +39,71 @@ async function routes(fastify, opts, done) {
                     }
                 }
                 timobj.add({ starttime: Tiimer(), lobbycodes: lcdtime, dnf: setTimeout(sendmsg(stop, toall, null), dnftimeinsec) });
-                sendmsg(timerstart, toall, wsh)
+                sendmsg({info:"timerstart"}, toall, wsh)
             }
             else if (text == playerjoin) {
-                if (playernumber <= 4) { sendmsg(playerinfo, nottoself, wsh) }
-                else { sendmsg(maxnumber, toself) }
+                if (playernumber <= 4) { sendmsg({info:"playerinfo"}, nottoself, wsh) }
+                else { sendmsg({info:"maxnumber"}, toself ,null) }
             }
-            else if (text = playertype) { sendmsg(playertype, nottoself, wsh) }
-            else if (text == (end, statsofall)) { sendmsg(calculatewinner(message)), toall, wsh }
-            else if (text = rematch) { sendmsg({ clrall, timerstart }, toall, wsh) }
-            else if (text = closelobby) { listofconnections.delete
-            for (const x  of listofconnections) {
-                if(connection == x.connect)
-                {
-                    hold = x ; 
-                    break ; 
-                }                
-            }
-            for (const y of listofconnections) {
-                if(hold.lobbycodes = y.lobbycodes)
-                {
-                    y.connect.close() ; 
+            else if (text == playertype) { sendmsg({info:playertype}, nottoself, wsh) }
+            else if (text == (end, statsofall)) { sendmsg({info:calculatewinner(message)}, toall, wsh) }
+            else if (text = rematch) { sendmsg({ info:"clrall", timerstartnewmatch:x }, toall, wsh) }
+            else if (text = closelobby) {
+                for (const x of listofconnections) {
+                    if (connection == x.connect) {
+                        hold = x;
+                        break;
+                    }
                 }
-            }
+                for (const y of listofconnections) {
+                    if (hold.lobbycodes = y.lobbycodes) {
+                        y.connect.close();
+                    }
+                }
 
             }
         })
     })
     done();
 }
+function sendmsg(info, flag, wsh) {
+    for (let x of listofconnections) {
+        if (wsh === x.connect) {
+            listobjholder = x;
+            break;
+        }
+    }
+    if (flag == toall || flag == null) {
+        for (let y of listofconnections) {
+            if (listobjholder.lobbycodes === y.lobbycodes) {
+                y.connect.socket.send(JSON.parse(info))
+            }
+        }
+    }
+    else if (flag == nottoself) {
+        for (let y of listofconnections) {
+            if (
+                listobjholder.lobbycodes === y.lobbycodes && y.lobbycodes != listobjholder.connect
+            ) {
+                y.connect.socket.send(JSON.parse(info))
+            }
+        }
+    }
+    else if (flag == toself) {
+        wsh.socket.send(info)
+    }
+}
+
+
+function Tiimer() {
+    var currtime = new Date.getTime();
+    return currtime;
+}
+// listofconnections.add({connect:connection , ssid:randssid, lobbycodes:lbycode})
+//flags  - toall wsh, nottoself wsh,self wsh ,NULL nowsh
+
 function calculatewinner(message) {
-    
+
     for (const x of listofconnections) {
         if (wsh === x.connect) {
             lobbynoforwin = listofconnections.lobbycodes
@@ -79,16 +115,15 @@ function calculatewinner(message) {
             setholder = y;
         }
     }
-    if(setholder.p1time!=null && setholder.p2time!=null &&setholder.p3time!=null &&setholder.p4time!=null)
-    {
-        minval  =  Math.min(setholder.p1time,setholder.p2time,setholder.p3time, setholder.p4time) ; 
-        arr = [setholder.p1time,setholder.p2time,setholder.p3time,setholder.p4time] ; 
+    if (setholder.p1time != null && setholder.p2time != null && setholder.p3time != null && setholder.p4time != null) {
+        minval = Math.min(setholder.p1time, setholder.p2time, setholder.p3time, setholder.p4time);
+        arr = [setholder.p1time, setholder.p2time, setholder.p3time, setholder.p4time];
         for (let i = 1; i < arr.length; i++) {
             if (arr[i] < minVal) {
-              minVal = arr[i];
-              minIndex = i;
+                minVal = arr[i];
+                minIndex = i;
             }
-          }
+        }
         return minIndex
     }
     // Convert Set to Array
@@ -118,40 +153,6 @@ function calculatewinner(message) {
 
 }
 
-
-function Tiimer() {
-    var currtime = new Date.getTime();
-    return currtime;
-}
-// listofconnections.add({connect:connection , ssid:randssid, lobbycodes:lbycode})
-//flags  - toall wsh, nottoself wsh,self wsh ,NULL nowsh
-function sendmsg(info, flag, wsh) {
-    for (let x of listofconnections) {
-        if (wsh === x.connect) {
-            listobjholder = x;
-            break;
-        }
-    }
-    if (flag == toall || flag == null) {
-        for (let y of listofconnections) {
-            if (listobjholder.lobbycodes === y.lobbycodes) {
-                y.connect.socket.send(JSON.parse(info))
-            }
-        }
-    }
-    else if (flag == nottoself) {
-        for (let y of listofconnections) {
-            if (
-                listobjholder.lobbycodes === y.lobbycodes && y.lobbycodes != listobjholder.connect
-            ) {
-                y.connect.socket.send(JSON.parse(info))
-            }
-        }
-    }
-    else if (flag == toself) {
-        wsh.socket.send(info)
-    }
-}
 module.exports = routes;
 // async function routes(fastify,opts,done) {
 //     await fastify.get('/*', { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
