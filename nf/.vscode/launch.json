@@ -5,23 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "name": "nodemon",
-            "program": "${workspaceFolder}/a.js",
-            "request": "launch",
-            "restart": true,
-            "runtimeExecutable": "nodemon",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "node"
-        },
-        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:5000/three",
+            "url": "http://localhost:5000/handler",
             "webRoot": "${workspaceFolder}"
         }
     ]
