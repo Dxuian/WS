@@ -13,6 +13,13 @@ const fastify = require('fastify')({
   logger: logger
   /*envToLogger[environment] ?? true // defaults to true if no entry matches in the map*/
 })
+
+fastify.register(require('@fastify/cookie'), {
+  secret: "my-secret", // for cookies signature
+  hook: 'onRequest', // set to false to disable cookie autoparsing or set autoparsing on any of the following hooks: 'onRequest', 'preParsing', 'preHandler', 'preValidation'. default: 'onRequest'
+  parseOptions: {}  // options for parsing cookies
+})
+
 fastify.register(require('@fastify/swagger'), {})
 fastify.register(require('@fastify/swagger-ui'), {
   routePrefix: '/docs',
@@ -29,7 +36,6 @@ fastify.register(require('@fastify/swagger-ui'), {
   transformSpecification: (swaggerObject, request, reply) => { return swaggerObject },
   transformSpecificationClone: true
 })
-
 var data = require("./data.js");
 const path = require('path')
 fastify.register(require('@fastify/static'), {
@@ -37,11 +43,6 @@ fastify.register(require('@fastify/static'), {
   prefix: '/public/', // optional: default '/'
 })
 
-
-
-fastify.register(require('@fastify/websocket'), {
-  options: { maxPayload: 1048576 }
-})
 // fastify.register(async function (fastify) {
 //   fastify.get('/ws', { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
 //     connection.socket.on('message', message => {
@@ -51,8 +52,9 @@ fastify.register(require('@fastify/websocket'), {
 //   })
 // })
 fastify.register(require("./route.js"));
-
-
+fastify.register(require('@fastify/websocket'), {
+  options: { maxPayload: 1048576 }
+})
 
 
 const PORT = 5000;
