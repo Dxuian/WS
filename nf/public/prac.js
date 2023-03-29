@@ -1,5 +1,6 @@
 //{ file: "prac.html", lobbycode: randlobbycode , wscode: randlobbycode}
 var socket;
+<<<<<<< HEAD
 var cookie  =  String((document.cookie)).split(";");
 var cok = [] ;  
 for (let x = 0; x <cookie.length; x++) {
@@ -25,6 +26,10 @@ if (wscode != null && lobbycode != null) {
 else
 {
     connectfail =true
+=======
+if (wscode != null && lobbycode != null) {
+    var socket = new WebSocket(wscode);
+>>>>>>> c51c1107da95aabe7ba36dfccac0a8a38958b241
 }
 socket.on("message", (message) => {
     var msgrec = JSON.parse(message);
