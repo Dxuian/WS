@@ -9,6 +9,7 @@ const logger = pino({
     }
   }
 })
+
 const fastify = require('fastify')({
   logger: logger
   /*envToLogger[environment] ?? true // defaults to true if no entry matches in the map*/

@@ -30,7 +30,7 @@ async function routes(fastify, opts, done) {
             fastify.log.info(error)
         }
     })
-    fastify.get("/ws/*", { WebSocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
+    fastify.get("/ws/*", { WebSocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => { 
         fastify.log.info("###########")
         randssid = uuidv4();
         lbycode = String(connection.url).substring(4) ; 
