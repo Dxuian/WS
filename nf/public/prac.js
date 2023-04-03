@@ -39,8 +39,25 @@ socket.onmessage =  (message) => {
     else if (whathappen==""){
 
     }
+    else if (whathappen=="playerjoin")
+    {
+        const gamestleftpanel = document.querySelector("#gamestleftpanel");
+
+ // example place value
+const html = `
+    <div class="text-left text-xl p-2 m-1 font-black bg-danger rounded-4">
+        <h1 class="inline-flex">placeholder_name</h1>
+        <div class="float-end text-2xl">icon</div>
+        Typing speed: <span id="typespd">${speed}</span> wpm
+        position: <span id="place">${place}</span>
+    </div>
+`;
+
+gamestleftpanel.insertAdjacentHTML("beforeend", html);
+
+    }
         // sendmsg({info:playertype}, nottoself, wsh) at line 72
-    if(whathappen=="playertype"){}
+    else if(whathappen=="playertype"){}
     // sendmsg({info:"maxnumber"}, toself ,null) at line 70
     else if (whathappen == "maxnumber") {
         showui()
@@ -96,17 +113,21 @@ function joingame(lc) {
     alert(lc)
     socket = WebSocket(lc)
 }
-const joinBtn = document.getElementById('join-btn');
-const joinShareDiv = document.getElementById('joinshare');
-const starterTextDiv = document.getElementById('startertext');
-const colap = document.getElementById("colap");
-joinBtn.addEventListener('click', () => {
-    joinShareDiv.classList.add('collapsed');
-    colap.classList.remove("px-40")
-    colap.classList.add("w-50")
-    joinShareDiv.classList.remove("left-32")
-    starterTextDiv.classList.add('collapsed');
-});
+// const join = document.getElementById("join-btn")
+// join.onclick = () => {
+//     const element = document.getElementById('colap');
+// element.style.transition = 'opacity 1s';
+// element.style.opacity = 0;
+// setTimeout(() => {
+//     element.classList.toggle("absolute")
+//   element.parentNode.removeChild(element)
+//   document.getElementById("gamestart").classList.toggle("hidden");
+// }, 1000);
+
+// }
+
+
+
 
 
 // ReactDOM.render(bigboard, document.getElementById('root'));

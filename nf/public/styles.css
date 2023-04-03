@@ -14,59 +14,8 @@
  .wholesite{
   background: black !important;
   width: 100% !important;
-  height: 100vh !important;
+  height: auto !important;
   overflow-x: hidden !important;
-  overflow-y: hidden !important;
 }
-
-
 
 /* chatgptanimations Remove startertext div */
-#joinshare.collapsed {
-  animation: move-left 1s forwards;
-}
-
-#startertext.collapsed {
-  animation: collapse 1s forwards;
-}
-
-@keyframes collapse {
-  0% {
-      width: 100%;
-      opacity: 1;
-  }
-  100% {
-      width: 0;
-      opacity: 0;
-  }
-}
-
-@keyframes move-left {
-  0% {
-      padding-right: 40px;
-      padding-left: 0;
-  }
-  100% {
-      padding-right: 0;
-      padding-left: 40px;
-  }
-}
-
-
-
-/* 
-.joingame {
-  transition: all 0.5s ease-in-out;
-}
-
-#joinshare.join {
-  padding-left: 10px;
-}
-
-#joinshare.join .sharelink {
-  transform: translateX(-50%);
-}
-
-#joinshare.join .joingame {
-  transform: translateX(-50%);
-} */
