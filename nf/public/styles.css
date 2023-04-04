@@ -18,4 +18,12 @@
   overflow-x: hidden !important;
 }
 
+#gamestleftpanel
+{
+  transition: opacity 1s;
+}
 /* chatgptanimations Remove startertext div */
+#colap
+{
+  transition: opacity 1s;
+}

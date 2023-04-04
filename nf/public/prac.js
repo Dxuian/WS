@@ -25,16 +25,29 @@ else
 {
     connectfail =true
 }
+socket.onclose = function(event) {
+    console.log(`WebSocket closed with status code ${event.code}`);
+    if(event.code==3636)
+    {
+        document.getElementsByTagName("main")[0].appendChild(conectfail)
+     conectfail.classList.replace("opacity-0","opacity-100")
+    setTimeout(() => {
+        conectfail.classList.replace("opacity-100","opacity-0")
+        conectfail.remove() ; 
+    }, 1200);
+    }
+  };
 socket.onmessage =  (message) => {
     var msgrec = JSON.parse(message);
     var whathappen = msgrec.info;
-
-
-
     // sendmsg({info:"timerstart"}, toall, wsh) at line 56    
     if (whathappen == "timerstart") {
 
 
+    }
+    else if(whathappen=="closecodewrong")
+    {
+        socket.close();
     }
     else if (whathappen==""){
 
@@ -109,10 +122,82 @@ function copyFromClipboard(id) {
     
 }
 function joingame(lc) {
-    socket.close() ;
-    alert(lc)
-    socket = WebSocket(lc)
+    var holder  = socket
+   
+    nc = "ws://localhost:5000/ws/"+ document.getElementById(lc).value
+    socket = new WebSocket(nc)
+    if(socket.readyState==1)
+    {
+        holder.close()
+    }
+    else{
+        socket= holder ; 
+    }
 }
+const joinbt = document.getElementById("join-btn");
+const leavebt = document.getElementById("leavegame");
+const gamestleftpanel = document.getElementById("gamestleftpanel");
+const colap = document.getElementById("colap");gamestleftpanel.remove();
+const conectfail =  document.getElementById("conectfail")
+conectfail.remove() ; 
+
+
+joinbt.addEventListener('click', function() {
+    joingame('joinlink-input');
+    colap.classList.remove("opacity-100")
+    colap.classList.add("opacity-0");
+    setTimeout(() => {
+      colap.remove();
+      document.getElementsByTagName("main")[0].appendChild(gamestleftpanel);
+      gamestleftpanel.classList.remove("opacity-0")
+      gamestleftpanel.classList.add("opacity-100");
+
+    }, 1200);
+  });
+  
+  leavebt.addEventListener('click', function() {
+    gamestleftpanel.classList.remove("opacity-100");
+    gamestleftpanel.classList.add("opacity-0")
+    setTimeout(() => {
+      gamestleftpanel.remove();
+      document.getElementsByTagName("main")[0].appendChild(colap)
+      colap.classList.remove("opacity-0")
+      colap.classList.add("opacity-100")
+    }, 1001);
+  });
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const join = document.getElementById("join-btn")
 // join.onclick = () => {
 //     const element = document.getElementById('colap');

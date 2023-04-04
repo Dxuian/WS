@@ -5,12 +5,10 @@ const fastify = require("fastify");
 var listofconnections = new Set()
 var fs = require('fs');
 var db = fastify.sqlite3
-
 async function routes(fastify, opts, done) {
-
     fastify.get("/handler*", (req, res) => {
         var afl = String(req.url).substring(8), lobbycode;
-        fastify.log.info(afl)
+        // fastify.log.info(afl)
         if (afl.length > 3) {
             var buffer = "ws://localhost:5000/ws" + afl
             lobbycode = String((afl));
@@ -20,15 +18,12 @@ async function routes(fastify, opts, done) {
             lobbycode = String((randlobbycode))
             var buffer = "ws://localhost:5000/ws" + randlobbycode
         }
-
         // fastify.log.info(lobbycode.length) ; 
         // fastify.log.info("#######") ; 
         var wscode = String((buffer));
         try {
             res.setCookie('lobbycode', lobbycode);
             res.setCookie('wscode', wscode);
-
-
             res.code(200).sendFile("pract.html")
         } catch (error) {
             fastify.log.info(error)
@@ -38,6 +33,11 @@ async function routes(fastify, opts, done) {
         fastify.log.info("###########")
         randssid = uuidv4();
         lbycode = String(connection.url).substring(4);
+        if(lbycode.length<32)
+        {
+            connection.socket.close(1001) ; 
+            // sendmsg({info:"closecodewrong"},"toself",connection)
+        }
         fastify.log.info(connection.url)
         fastify.log.info(lbycode)
         fastify.log.info("###########")
@@ -50,9 +50,10 @@ async function routes(fastify, opts, done) {
                     break;
                 }
             }
+            fastify.log.info("removed a connection")
             sendmsg({ info: removeplayer }, toall, null)
         })
-        connection.socket.on("message", (message) => {
+        connection.socket.on("message", async (message) => {
             if (text == start) {
                 for (let x of listofconnections) {
                     if (connection === x.connect) {
@@ -60,8 +61,8 @@ async function routes(fastify, opts, done) {
                         break;
                     }
                 }
-                var conpara =
-                    timobj.add({ starttime: Tiimer(), lobbycodes: lcdtime, dnf: setTimeout(sendmsg(stop, toall, null), dnftimeinsec) });
+                var conpara = await app.sqlite.run()
+                timobj.add({ starttime: Tiimer(), lobbycodes: lcdtime, dnf: setTimeout(sendmsg(stop, toall, null), dnftimeinsec) });
                 sendmsg({ info: "timerstart", content: conpara }, toall, wsh)
             }
             else if (text == playerjoin) {
@@ -83,61 +84,46 @@ async function routes(fastify, opts, done) {
                         y.connect.close();
                     }
                 }
-
             }
         })
     })
-    fastify.get("/xhr", (res, req) => {
-    })
+    // fastify.get("/xhr", (res, req) => {
+    // })
     //key = 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
-    fastify.post("/completions", (reqest, res) => {
-
-    })
-    fastify.get("/dbmake", async (req, res) => {
-
-        try {
-            app.sqlite.all(`CREATE TABLE texts (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT);`)
-            res.send("ok done")
-
-        } catch (error) {
-            res.send("error is :" + error + "    " + typeof mydb)
-        }
-
-
-    })
-    fastify.get("/dbi", (req, res) => {
-
-        fastify.log.info("ok")
-        try {
-            app.sqlite.all("INSERT INTO texts (content) VALUES (?)", "hello my name is unnat ")
-            res.send("ok done")
-        } catch (error) {
-            res.send("okfail")
-        }
-
-
-
-
-    })
-    fastify.get("/dbr", async (req, res) => {
-        try {
-            fastify.log.info("@@@@@")
-            const result = await app.sqlite.all('SELECT * FROM texts');
-            fastify.log.info("@@@$$$$$@@")
-
-            return { data: result };
-        } catch (err) {
-            throw new Error('Unable to retrieve data from database');
-        }
-
-
-    })
-    fastify.get("/db", async (req, res) => {
-        fastify.log.info("loadingdb")
-        await loaddb(fastify);
-
-        fastify.log.info("finished loading db");
-    })
+    // fastify.post("/completions", (reqest, res) => {
+    // })
+    // fastify.get("/dbmake", async (req, res) => {
+    //     try {
+    //         app.sqlite.all(`CREATE TABLE texts (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT);`)
+    //         res.send("ok done")
+    //     } catch (error) {
+    //         res.send("error is :" + error + "    " + typeof mydb)
+    //     }
+    // })
+    // fastify.get("/dbi", (req, res) => {
+    //     fastify.log.info("ok")
+    //     try {
+    //         app.sqlite.all("INSERT INTO texts (content) VALUES (?)", "hello my name is unnat ")
+    //         res.send("ok done")
+    //     } catch (error) {
+    //         res.send("okfail")
+    //     }
+    // })
+    // fastify.get("/dbr", async (req, res) => {
+    //     try {
+    //         fastify.log.info("@@@@@")
+    //         const result = await app.sqlite.all('SELECT * FROM texts');
+    //         fastify.log.info("@@@$$$$$@@")
+    //         return { data: result };
+    //     } catch (err) {
+    //         throw new Error('Unable to retrieve data from database');
+    //     }
+    // })
+    // fastify.get("/db", async (req, res) => {
+    //     fastify.log.info("loadingdb")
+    //     await loaddb(fastify);
+    //     fastify.log.info("finished loading db");
+    // })
     // fastify.get('/items*', (req, reply) => {
     //     var holder = url.parse(req.url, true)
     //     fastify.log.info(" ####");
@@ -153,7 +139,6 @@ async function routes(fastify, opts, done) {
     //     else {
     //         reply.send({ test: 'failed' });
     //     }
-
     // }
     // )
     // fastify.get("/items/:id", (req, res) => {
@@ -163,9 +148,6 @@ async function routes(fastify, opts, done) {
     //         k = data.innerdata
     //         fastify.log.info("#123123");
     //     }
-
-
-
     //     res.send({ variable: k });
     // })
     // fastify.post("/items/:id", (req, res) => {
@@ -176,9 +158,6 @@ async function routes(fastify, opts, done) {
     //     if (ide == 4) { k = data.innerdata }
     //     if (ide == 1) { k = data.sirname }
     //     fastify.log.info("#########");
-
-
-
     //     res.send({ variable: k, url: req.url });
     // })
     // fastify.delete("/items/delete/:id", (req, res) => {
@@ -190,9 +169,7 @@ async function routes(fastify, opts, done) {
     //             res.code(200).send("item has been deleted");
     //         }
     //         else { res.code(201).send("failed to delete"); }
-
     //     }
-
     // })
     // fastify.put("/items/put/:id", (req, res) => {
     //     fastify.log.info("#########");
@@ -215,7 +192,6 @@ async function routes(fastify, opts, done) {
     //     }
     // })
     // fastify.get('/ws', { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
-
     //     connection.socket.on('message', message => {
     //         // message.toString() === 'hi from client'
     //         const decoder = new TextDecoder('utf-8');
@@ -253,30 +229,46 @@ async function routes(fastify, opts, done) {
             data2: result2
         };
     })
-
-
     done();
-
-
 }
-
 //takes 38m36s - 40m58s to make db 
+function sendmsg(info, flag, wsh) {
+    var listobjholder  ;
+    for (let x of listofconnections) {
+        if (wsh === x.connect) {
+            listobjholder = x;
+            break;
+        }
+    }
+    if (flag == "toall" || flag == null) {
+        for (let y of listofconnections) {
+            if (listobjholder.lobbycodes === y.lobbycodes) {
+                y.connect.socket.send(JSON.parse(info))
+            }
+        }
+    }
+    else if (flag == "nottoself") {
+        for (let y of listofconnections) {
+            if (
+                listobjholder.lobbycodes === y.lobbycodes && y.lobbycodes != listobjholder.connect
+            ) {
+                y.connect.socket.send(JSON.parse(info))
+            }
+        }
+    }
+    else if (flag == "toself") {
+        wsh.socket.send(info)
+    }
+}
 async function loaddb(fastify) {
-
-    
     try {
         await fs.readFile("words_alpha.txt", async (er, data) => {
-
             await app.sqlite.run('CREATE TABLE IF NOT EXISTS textsnormal (id INTEGER PRIMARY KEY, texts TEXT)');
             var words = await String(data).split("\r\n");
             await words.forEach(async (element) => {
                 await app.sqlite.run('INSERT INTO textsnormal (texts) VALUES (?)', element)
             });
             await fastify.log.info("1 db made Donedb loaded/made");
-    
-            
-    
-    
         });
         await fs.readFile("words.txt", async (er, data) => {
             await app.sqlite.run("BEGIN TRANSACTION;");
@@ -286,22 +278,62 @@ async function loaddb(fastify) {
                 await app.sqlite.run('INSERT INTO textsabnormal (texts) VALUES (?)', element);
             }
             await app.sqlite.run("COMMIT;");
-
             await fastify.log.info("abnormal table made ");
         });
     } catch (error) {
         fastify.log.info(error)
     }
-
     // move BEGIN TRANSACTION outside of the second readFile callback
+}
+function calculatewinner(message) {
+
+    for (const x of listofconnections) {
+        if (wsh === x.connect) {
+            lobbynoforwin = listofconnections.lobbycodes
+            break;
+        }
+    }
+    for (const y of timobj) {
+        if (lobbynoforwin === y.lobbycodes) {
+            setholder = y;
+        }
+    }
+    if (setholder.p1time != null && setholder.p2time != null && setholder.p3time != null && setholder.p4time != null) {
+        minval = Math.min(setholder.p1time, setholder.p2time, setholder.p3time, setholder.p4time);
+        arr = [setholder.p1time, setholder.p2time, setholder.p3time, setholder.p4time];
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i] < minVal) {
+                minVal = arr[i];
+                minIndex = i;
+            }
+        }
+        return (minIndex + "is the winner")
+    }
+    // Convert Set to Array
+    var myArray = Array.from(setholder);
+
+    // Add new fields to each object in the array
+    myArray.forEach(set => {
+        set.forEach(obj => {
+            const num = obj.message.player;
+            if (num >= 1 && num <= 4) {
+                obj[`p${num}time`] = message.x; // update p_num_time based on the num value of the object
+            }
+        });
+    });
 
 
 
+    // Convert Array back to Set
+    const updatedSet = new Set(myArray);
+
+    // Replace the original Set with the updated one
+    timobj.delete(setholder);
+    timobj.add(updatedSet);
 
 
 
 
 }
 
-
-module.exports = routes; 
+module.exports = routes;

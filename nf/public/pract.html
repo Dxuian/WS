@@ -30,9 +30,9 @@
         </div>
     </header>
     <main>
-        <!-- <div id="colap" class="row px-40 ">
+        <div id="colap" class="row px-40 opacity-100">
             <div id="joinshare" class="col bg-yellow-500 rounded-l-3xl">
-                <div id="sharelink" 
+                <div id="sharelink"
                     class="sharelink bg-orange-500 w-1/2 py-3 px-5 m-3 rounded-5 relative left-32 box-border overflow-hidden	">
                     <div class="sharelink-header font-bold relative right-8">
                         <h2 class="text-left font-bold text-2xl m-1">Share Link:</h2>
@@ -46,7 +46,8 @@
                             onclick="copyToClipboard('share-link-input')">Copy</button>
                     </div>
                 </div>
-                <div id="joingame" class="joingame bg-violet-500 w-1/2  pb-0 p-5 m-3 rounded-5 relative left-32 box-border	">
+                <div id="joingame"
+                    class="joingame bg-violet-500 w-1/2  pb-0 p-5 m-3 rounded-5 relative left-32 box-border	">
                     <div class="joingame-header font-bold	relative  right-8 bottom-8">
                         <h2 class="text-left font-bold text-2xl m-1">Join game:</h2>
                         <p class="m-1 text-left">To join a game, please paste the game link into the box below and click
@@ -61,25 +62,27 @@
                         <br>
                         <button id="paste-btn" class="bg-lime-500  rounded-3 text-2xl px-1 p-2 my-2 float-start"
                             onclick="copyFromClipboard('joinlink-input')">Paste</button>
-                        <button id="join-btn" class="  rounded-3 text-2xl px-1  p-2 my-2 bg-red-500"
-                            onclick="joingame('joinlink-input')">Join game</button>
+                        <button id="join-btn" class="  rounded-3 text-2xl px-1  p-2 my-2 bg-red-500">Join game</button>
                     </div>
                 </div>
             </div>
-            <div id="startertext"class=" col bg-yellow-500 rounded-r-3xl ">
+            <div id="startertext" class=" col bg-yellow-500 rounded-r-3xl ">
                 <div class="my-auto relative top-1/4 right-12 text-2xl font-black  ">
-                KeyChamp is a multiplayer typing speed competition game where you can challenge players from around the
-                world to see who can type the fastest and most accurately. <br> Participate in real-time typing
-                races to climb the leaderboard and earn rewards.<br> Customize your avatar and keyboard layout to make the
-                game personalized. <br> Join the KeyChamp community and become the ultimate typing champion!
+                    KeyChamp is a multiplayer typing speed competition game where you can challenge players from around
+                    the
+                    world to see who can type the fastest and most accurately. <br> Participate in real-time typing
+                    races to climb the leaderboard and earn rewards.<br> Customize your avatar and keyboard layout to
+                    make the
+                    game personalized. <br> Join the KeyChamp community and become the ultimate typing champion!
+                </div>
             </div>
-            </div>
-        </div> -->
-        <div id="gamestleftpanel" class="rounded bg-cyan-400 rounded col-2 mx-3">
+        </div>
+        <div id="gamestleftpanel" class="rounded bg-cyan-400 opacity-0 rounded col-2 mx-3">
             <div class="bg-sky-500 rounded text-left">
                 <div class="text-2xl font-black text-left p-1"> In lobby:</div>
                 <br>
-                <div class="text-left text-xl p-2 m-1 font-black bg-danger rounded-4"><h1 class="inline-flex">placeholder_name</h1>
+                <div class="text-left text-xl p-2 m-1 font-black bg-danger rounded-4">
+                    <h1 class="inline-flex">placeholder_name</h1>
                     <div class="float-end text-2xl">icon</div>
                     Typing speed: <span id="typespd">32</span> wpm
                     position: <span id="place">2</span>
@@ -87,7 +90,7 @@
 
 
                 </div>
-                 <!-- <div class="text-left text-xl p-2 m-1 font-black bg-danger rounded-4"><h1 class="inline-flex">placeholder_name</h1>
+                <!-- <div class="text-left text-xl p-2 m-1 font-black bg-danger rounded-4"><h1 class="inline-flex">placeholder_name</h1>
                     <div class="float-end text-2xl">icon</div>
                     Typing speed: <span id="typespd">32</span> wpm
                     position: <span id="place">4</span>
@@ -142,6 +145,12 @@
                         onclick="leavegame()">Leave</button>
                 </div>
             </div>
+        </div>
+        <div id="conectfail" class="bg-red-600 absolute rounded-3 text-2xl font-black text-red-300">
+            Connection failed
+            <div class="text-black text-justify opacity-0 text-xl">check your internet connection or <br>
+                retry entering the correct lobby code</div>
+
         </div>
         <script src="public\prac.js"></script>
     </main>
