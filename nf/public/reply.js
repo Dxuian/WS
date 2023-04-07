@@ -1,14 +1,13 @@
 var socket = new WebSocket("ws://127.0.0.1:5000/ws");
-try {
-    socket.addEventListener("open", (event) => {
-        socket.send({ text: "Hello Server!", textarea: 123 });
-        document.getElementsByTagName("body")[0].style.background="green"
-
-
-    });
-} catch (error) {
-    console.log(error);
-}
+socket.addEventListener("open", (event) => {
+    socket.send({ text: "Hello Server!", textarea: 123 });
+    document.getElementsByTagName("body")[0].style.background="green"
+})
+// try {
+//    ;
+// } catch (error) {
+//     console.log(error);
+// }
 
 function change() {
     try {

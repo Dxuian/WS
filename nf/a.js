@@ -67,10 +67,11 @@ fastify.register(require('@fastify/static'), {
 //   })
 // })
 
-fastify.register(require("./route.js"));
 fastify.register(require('@fastify/websocket'), {
   options: { maxPayload: 1048576 }
 })
+fastify.register(require("./route.js"));
+
 
 
 const PORT = 5000;

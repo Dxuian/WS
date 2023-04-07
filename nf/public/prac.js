@@ -1,6 +1,17 @@
-var socket;
+var socket, holder , temphold;
 var cookie  =  String((document.cookie)).split(";");
 var cok = [] ;  
+const joinbt = document.getElementById("join-btn");
+const leavebt = document.getElementById("leavegame");
+const gamestleftpanel = document.getElementById("gamestleftpanel");
+const colap = document.getElementById("colap");gamestleftpanel.remove();
+const conectfail =  document.getElementById("conectfail")
+conectfail.remove() ; 
+
+
+
+
+
 for (let x = 0; x <cookie.length; x++) {
     cok.unshift(cookie[x]);
     
@@ -16,7 +27,7 @@ var wscode = "ws://localhost:5000/ws/"+lobbycode , connectfail ;
 
 if (wscode != null && lobbycode != null) {
     try {
-        var socket = new WebSocket(wscode);
+        socket = new WebSocket(wscode);
     } catch (error) {
         console.log(error)
     }
@@ -25,19 +36,10 @@ else
 {
     connectfail =true
 }
-socket.onclose = function(event) {
-    console.log(`WebSocket closed with status code ${event.code}`);
-    if(event.code==3636)
-    {
-        document.getElementsByTagName("main")[0].appendChild(conectfail)
-     conectfail.classList.replace("opacity-0","opacity-100")
-    setTimeout(() => {
-        conectfail.classList.replace("opacity-100","opacity-0")
-        conectfail.remove() ; 
-    }, 1200);
-    }
-  };
+
+
 socket.onmessage =  (message) => {
+
     var msgrec = JSON.parse(message);
     var whathappen = msgrec.info;
     // sendmsg({info:"timerstart"}, toall, wsh) at line 56    
@@ -45,10 +47,10 @@ socket.onmessage =  (message) => {
 
 
     }
-    else if(whathappen=="closecodewrong")
-    {
-        socket.close();
-    }
+    // else if(whathappen=="closecodewrong")
+    // {
+    //     socket.close();
+    // }
     else if (whathappen==""){
 
     }
@@ -93,6 +95,19 @@ gamestleftpanel.insertAdjacentHTML("beforeend", html);
     }
 }
 
+socket.onclose = (event) => {
+  if (event.code === 3636) {
+    joinornot = false ; 
+    console.log("fake") ; 
+    socket = holder ; 
+    console.log("ok that closed!!!!");
+    alert("ws has been closed!!!");
+  }
+};
+
+
+
+
 function copyToClipboard(id) {
   // Get the text field
   var copyText = document.getElementById(id);
@@ -121,38 +136,34 @@ function copyFromClipboard(id) {
 
     
 }
-function joingame(lc) {
-    var holder  = socket
-   
-    nc = "ws://localhost:5000/ws/"+ document.getElementById(lc).value
-    socket = new WebSocket(nc)
-    if(socket.readyState==1)
-    {
-        holder.close()
-    }
-    else{
-        socket= holder ; 
-    }
-}
-const joinbt = document.getElementById("join-btn");
-const leavebt = document.getElementById("leavegame");
-const gamestleftpanel = document.getElementById("gamestleftpanel");
-const colap = document.getElementById("colap");gamestleftpanel.remove();
-const conectfail =  document.getElementById("conectfail")
-conectfail.remove() ; 
 
-
-joinbt.addEventListener('click', function() {
+joinbt.addEventListener('click', async function() {
     joingame('joinlink-input');
-    colap.classList.remove("opacity-100")
-    colap.classList.add("opacity-0");
-    setTimeout(() => {
-      colap.remove();
-      document.getElementsByTagName("main")[0].appendChild(gamestleftpanel);
-      gamestleftpanel.classList.remove("opacity-0")
-      gamestleftpanel.classList.add("opacity-100");
-
-    }, 1200);
+    await setTimeout(() => {
+        
+    }, 1000);
+    if (joinornot) {
+    
+      colap.classList.remove("opacity-100")
+      colap.classList.add("opacity-0");
+      setTimeout(() => {
+        colap.remove();
+        document.getElementsByTagName("main")[0].appendChild(gamestleftpanel);
+        gamestleftpanel.classList.remove("opacity-0")
+        gamestleftpanel.classList.add("opacity-100");
+      }, 1200);
+    }
+    else
+    {
+      colap.classList.remove("opacity-100")
+      colap.classList.add("opacity-0");
+      setTimeout(() => {
+        colap.remove();
+        document.getElementsByTagName("main")[0].appendChild(gamestleftpanel);
+        gamestleftpanel.classList.remove("opacity-0")
+        gamestleftpanel.classList.add("opacity-100");
+      }, 1200);
+    }
   });
   
   leavebt.addEventListener('click', function() {
@@ -167,6 +178,21 @@ joinbt.addEventListener('click', function() {
   });
   
 
+var joinornot ; 
+  async function joingame(lc) {
+    var nc = "ws://localhost:5000/ws/" + document.getElementById(lc).value;
+    try {
+      var handler = new WebSocket(nc);
+      joinornot =true ; 
+      temphold = socket;
+      socket = handler;
+      
+    } catch (error) {
+     
+      console.log(error);
+    }
+  }
+  
 
 
 
@@ -176,13 +202,32 @@ joinbt.addEventListener('click', function() {
 
 
 
+/*     ██╗██╗   ██╗███╗   ██╗██╗  ██╗    ██████╗ ███████╗██╗   ██╗ ██████╗ ███╗   ██╗██████╗     ████████╗██╗  ██╗██╗███████╗    ██████╗  ██████╗ ██╗███╗   ██╗████████╗    
+     ██║██║   ██║████╗  ██║██║ ██╔╝    ██╔══██╗██╔════╝╚██╗ ██╔╝██╔═══██╗████╗  ██║██╔══██╗    ╚══██╔══╝██║  ██║██║██╔════╝    ██╔══██╗██╔═══██╗██║████╗  ██║╚══██╔══╝    
+     ██║██║   ██║██╔██╗ ██║█████╔╝     ██████╔╝█████╗   ╚████╔╝ ██║   ██║██╔██╗ ██║██║  ██║       ██║   ███████║██║███████╗    ██████╔╝██║   ██║██║██╔██╗ ██║   ██║       
+██   ██║██║   ██║██║╚██╗██║██╔═██╗     ██╔══██╗██╔══╝    ╚██╔╝  ██║   ██║██║╚██╗██║██║  ██║       ██║   ██╔══██║██║╚════██║    ██╔═══╝ ██║   ██║██║██║╚██╗██║   ██║       
+╚█████╔╝╚██████╔╝██║ ╚████║██║  ██╗    ██████╔╝███████╗   ██║   ╚██████╔╝██║ ╚████║██████╔╝       ██║   ██║  ██║██║███████║    ██║     ╚██████╔╝██║██║ ╚████║   ██║       
+ ╚════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝    ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚═════╝        ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝    ╚═╝      ╚═════╝ ╚═╝╚═╝  ╚═══╝   ╚═╝       
+                                                                                                                                                                           */
 
 
 
 
-
-
-
+// socket.onclose = function(event) {
+//     console.log(`WebSocket closed with status code ${event.code}`);
+//     if (socket.readystate===3) { 
+//         if(event.code==3636)
+//     {
+//         document.getElementsByTagName("main")[0].appendChild(conectfail)
+//      conectfail.classList.replace("opacity-0","opacity-100")
+//     setTimeout(() => {
+//         conectfail.classList.replace("opacity-100","opacity-0")
+//         conectfail.remove() ; 
+//     }, 1200);
+//     }
+//     }
+    
+//   };
 
 
 

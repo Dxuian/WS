@@ -1,4 +1,10 @@
 
+###pol
+GET http://localhost:5000/pol123 HTTP/1.1
+
+
+
+
 ###ws testing
 GET http://localhost:5000/ws HTTP/1.1
 
