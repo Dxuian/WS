@@ -48,11 +48,11 @@ async function routes(fastify, opts, done) {
             fastify.log.info("%%%%%%%%%%%")
             for (let x of listofconnections) {
                 if (x.connect === connection) {
-                    tempstr = x.reqq.url + "has left!!!!!!!"
-                   await  fastify.log.info(tempstr)
+                    tempstr = x.reqq.url 
+                   await  fastify.log.info(tempstr + "has left!!!!!!!")
                     listofconnections.delete(x)
                     if (typo==false) {
-                        fastify.log.info(x.reqq.url + "was a false url user!!!!!!!")
+                        fastify.log.info(tempstr + "was a false url user!!!!!!!")
                         typo = true ; 
 
                     }
@@ -100,6 +100,9 @@ async function routes(fastify, opts, done) {
                 }
             }
         })
+    })
+    fastify.get("/rea",(req,res)=>{
+        res.sendFile("r.html");
     })
 
 
