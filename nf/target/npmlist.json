@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"fastify-api","dependencies":{"@fastify/cookie":{"version":"8.3.0"},"@fastify/swagger-ui":{"version":"1.5.0"},"fastify":{"version":"4.15.0"}}}

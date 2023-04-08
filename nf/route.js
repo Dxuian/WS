@@ -4,106 +4,148 @@ const url = require("url");
 const fastify = require("fastify");
 var listofconnections = new Set()
 var fs = require('fs');
+const configobj = {
+    babelrc: {
+      presets: ["@babel/preset-env", "@babel/preset-react"],
+      extensions: ['js', 'jsx'],
+      plugins: ['bare-import-rewrite'],
+    }
+  }
 // var db = fastify.sqlite3 ,typo ; 
 async function routes(fastify, opts, done) {
-    fastify.get("/handler*", (req, res) => {
-        var afl = String(req.url).substring(8), lobbycode;
-        // fastify.log.info(afl)
-        if (afl.length > 3) {
-            var buffer = "ws://localhost:5000/ws" + afl
-            lobbycode = String((afl));
-        }
-        else {
-            var randlobbycode = uuidv4()
-            lobbycode = String((randlobbycode))
-            var buffer = "ws://localhost:5000/ws" + randlobbycode
-        }
-        // fastify.log.info(lobbycode.length) ; 
-        // fastify.log.info("#######") ; 
-        var wscode = String((buffer));
-        try {
-            res.setCookie('lobbycode', lobbycode);
-            res.setCookie('wscode', wscode);
-            res.code(200).sendFile("pract.html")
-        } catch (error) {
-            fastify.log.info(error)
-        }
-    })
-    fastify.get("/ws/*", { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
+    // fastify.get("/handler*", (req, res) => {
+    //     var afl = String(req.url).substring(8), lobbycode;
+    //     // fastify.log.info(afl)
+    //     if (afl.length > 3) {
+    //         var buffer = "ws://localhost:5000/ws" + afl
+    //         lobbycode = String((afl));
+    //     }
+    //     else {
+    //         var randlobbycode = uuidv4()
+    //         lobbycode = String((randlobbycode))
+    //         var buffer = "ws://localhost:5000/ws" + randlobbycode
+    //     }
+    //     // fastify.log.info(lobbycode.length) ; 
+    //     // fastify.log.info("#######") ; 
+    //     var wscode = String((buffer));
+    //     try {
+    //         res.setCookie('lobbycode', lobbycode);
+    //         res.setCookie('wscode', wscode);
+    //         res.code(200).sendFile("pract.html")
+    //     } catch (error) {
+    //         fastify.log.info(error)
+    //     }
+    // })
+    // fastify.get("/ws/*", { websocket: true }, (connection /* SocketStream */, req /* FastifyRequest */) => {
         
-        var typo  ;
-        fastify.log.info("###########")
-        randssid = uuidv4();
-        lbycode = req.url.slice(4)
-        if(lbycode.length<32)
-        {   
-            typo= false
-            connection.socket.close(3636) ; 
-        }
-        fastify.log.info(req.url + "has connected !!!!!")
-        fastify.log.info(lbycode + "is his lobbycode")
-        fastify.log.info("###########")
-        listofconnections.add({ connect: connection, ssid: randssid, lobbycodes: lbycode ,reqq:req})
-        connection.socket.on("close", async() => {
-            fastify.log.info("%%%%%%%%%%%")
-            for (let x of listofconnections) {
-                if (x.connect === connection) {
-                    tempstr = x.reqq.url 
-                   await  fastify.log.info(tempstr + "has left!!!!!!!")
-                    listofconnections.delete(x)
-                    if (typo==false) {
-                        fastify.log.info(tempstr + "was a false url user!!!!!!!")
-                        typo = true ; 
+    //     var typo  ;
+    //     fastify.log.info("###########")
+    //     randssid = uuidv4();
+    //     lbycode = req.url.slice(4)
+    //     if(lbycode.length<32)
+    //     {   
+    //         typo= false
+    //         connection.socket.close(3636) ; 
+    //     }
+    //     fastify.log.info(req.url + "has connected !!!!!")
+    //     fastify.log.info(lbycode + "is his lobbycode")
+    //     fastify.log.info("###########")
+    //     listofconnections.add({ connect: connection, ssid: randssid, lobbycodes: lbycode ,reqq:req})
+    //     connection.socket.on("close", async() => {
+    //         fastify.log.info("%%%%%%%%%%%")
+    //         for (let x of listofconnections) {
+    //             if (x.connect === connection) {
+    //                 tempstr = x.reqq.url 
+    //                await  fastify.log.info(tempstr + "has left!!!!!!!")
+    //                 listofconnections.delete(x)
+    //                 if (typo==false) {
+    //                     fastify.log.info(tempstr + "was a false url user!!!!!!!")
+    //                     typo = true ; 
 
-                    }
-                            //     else{
-        //     fastify.log.info("removed a connection")
-        //     sendmsg({ info: "removeplayer" }, "toall", null)
-        // type = true ; }
-                    break;
+    //                 }
+    //                         //     else{
+    //     //     fastify.log.info("removed a connection")
+    //     //     sendmsg({ info: "removeplayer" }, "toall", null)
+    //     // type = true ; }
+    //                 break;
 
-                }
-            }
+    //             }
+    //         }
             
 
-        })
-        connection.socket.on("message", async (message) => {
-            if (text == start) {
-                for (let x of listofconnections) {
-                    if (connection === x.connect) {
-                        lcdtime = x.lobbycodes;
-                        break;
-                    }
-                }
-                var conpara = await app.sqlite.run()
-                timobj.add({ starttime: Tiimer(), lobbycodes: lcdtime, dnf: setTimeout(sendmsg(stop, toall, null), dnftimeinsec) });
-                sendmsg({ info: "timerstart", content: conpara }, toall, wsh)
-            }
-            else if (text == playerjoin) {
-                if (playernumber <= 4) { sendmsg({ info: "playerinfo" }, nottoself, wsh) }
-                else { sendmsg({ info: "maxnumber" }, toself, null) }
-            }
-            else if (text == playertype) { sendmsg({ info: playertype }, nottoself, wsh) }
-            else if (text == (end, statsofall)) { sendmsg({ info: calculatewinner(message) }, toall, wsh) }
-            else if (text = rematch) { sendmsg({ info: "clrall", timerstartnewmatch: x }, toall, wsh) }
-            else if (text = closelobby) {
-                for (const x of listofconnections) {
-                    if (connection == x.connect) {
-                        hold = x;
-                        break;
-                    }
-                }
-                for (const y of listofconnections) {
-                    if (hold.lobbycodes = y.lobbycodes) {
-                        y.connect.close();
-                    }
-                }
-            }
-        })
+    //     })
+    //     connection.socket.on("message", async (message) => {
+    //         if (text == start) {
+    //             for (let x of listofconnections) {
+    //                 if (connection === x.connect) {
+    //                     lcdtime = x.lobbycodes;
+    //                     break;
+    //                 }
+    //             }
+    //             var conpara = await app.sqlite.run()
+    //             timobj.add({ starttime: Tiimer(), lobbycodes: lcdtime, dnf: setTimeout(sendmsg(stop, toall, null), dnftimeinsec) });
+    //             sendmsg({ info: "timerstart", content: conpara }, toall, wsh)
+    //         }
+    //         else if (text == playerjoin) {
+    //             if (playernumber <= 4) { sendmsg({ info: "playerinfo" }, nottoself, wsh) }
+    //             else { sendmsg({ info: "maxnumber" }, toself, null) }
+    //         }
+    //         else if (text == playertype) { sendmsg({ info: playertype }, nottoself, wsh) }
+    //         else if (text == (end, statsofall)) { sendmsg({ info: calculatewinner(message) }, toall, wsh) }
+    //         else if (text = rematch) { sendmsg({ info: "clrall", timerstartnewmatch: x }, toall, wsh) }
+    //         else if (text = closelobby) {
+    //             for (const x of listofconnections) {
+    //                 if (connection == x.connect) {
+    //                     hold = x;
+    //                     break;
+    //                 }
+    //             }
+    //             for (const y of listofconnections) {
+    //                 if (hold.lobbycodes = y.lobbycodes) {
+    //                     y.connect.close();
+    //                 }
+    //             }
+    //         }
+    //     })
+    // })
+    // fastify.get("/rea",(req,res)=>{
+    //     res.sendFile("r.html");
+    // })
+    fastify.get("/rt",configobj,(req,res)=>{
+        res.sendFile("rt.html");
     })
-    fastify.get("/rea",(req,res)=>{
-        res.sendFile("r.html");
-    })
+    fastify.get('/ok', async (request, reply) => {
+        const html = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>Hello, world!</title>
+            </head>
+            <body>
+              <div id="root"></div>
+              <script type="text/javascript" src="/js/app.js"></script>
+            </body>
+          </html>
+        `;
+        reply.type('text/html').send(html);
+      });
+      
+      // Define the route for the JavaScript file
+      fastify.get('/js/app.js', async (request, reply) => {
+        const js = `
+          import React from 'react';
+          import ReactDOM from 'react-dom';
+      
+          const App = () => {
+            return <h1>Hello, world!</h1>;
+          };
+      
+          ReactDOM.render(<App />, document.getElementById('root'));
+        `;
+        reply.type('application/javascript').send(js);
+      });
+      
 
 
 

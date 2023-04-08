@@ -12,8 +12,7 @@ function FavoriteColor() {
 // Render the component to the DOM  
 function MyApp() {
     return  (
-        <div><FavoriteColor />
-        <Greeting /></div>)
+        <div>hello!</div>)
     
        
 

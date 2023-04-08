@@ -53,9 +53,24 @@ fastify.register(require('@fastify/swagger-ui'), {
   transformSpecificationClone: true
 })
 var data = require("./data.js");
+const config = {
+  babelrc: {
+    presets: ["@babel/preset-env", "@babel/preset-react"],
+    extensions: ['js', 'jsx'],
+    plugins: ['bare-import-rewrite'],
+  }
+};
 fastify.register(require('@fastify/static'), {
   root: path.join(__dirname, 'public'),
   prefix: '/public/', // optional: default '/'
+})
+.register(require('@fastify/static'), {
+  root: path.join(__dirname, 'node_modules'),
+  prefix: '/node_modules',
+  decorateReply: false,
+})
+.register(require('fastify-babel'), {
+  babelrc: config
 })
 
 // fastify.register(async function (fastify) {
@@ -66,6 +81,14 @@ fastify.register(require('@fastify/static'), {
 //     })
 //   })
 // })
+// require('@babel/register')({
+//   ignore: [/\/(build|node_modules)\//],
+//   presets: ['@babel/preset-react']
+// });
+
+
+
+
 
 fastify.register(require('@fastify/websocket'), {
   options: { maxPayload: 1048576 }
