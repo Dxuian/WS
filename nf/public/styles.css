@@ -1,29 +1,3 @@
-@font-face {
-  font-family: "sfpro";
-  src: url("SFPRODISPLAYREGULAR.OTF");
-}
-.sfpro {
-  font-family: "sfpro";
-}
-
-* {
-  text-align: center;
-
-}
-
- .wholesite{
-  background: black !important;
-  width: 100% !important;
-  height: auto !important;
-  overflow-x: hidden !important;
-}
-
-#gamestleftpanel
-{
-  transition: opacity 1s;
-}
-/* chatgptanimations Remove startertext div */
-#colap
-{
-  transition: opacity 1s;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2d8f62fcb0ad9146bfe9e637b2faf54e28aee067a803b69679c8981b4f341c57
+size 408

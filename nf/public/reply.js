@@ -1,33 +1,3 @@
-var socket = new WebSocket("ws://127.0.0.1:5000/ws");
-socket.addEventListener("open", (event) => {
-    socket.send({ text: "Hello Server!", textarea: 123 });
-    document.getElementsByTagName("body")[0].style.background="green"
-})
-// try {
-//    ;
-// } catch (error) {
-//     console.log(error);
-// }
-
-function change() {
-    try {
-        var k = document.getElementById("one").value
-        socket.send(k)
-        document.getElementsByTagName("body")[0].style.background="pink"
-
-    // Create WebSocket connection.
-    
-    // Connection opened
-    } catch (error) {
-        console.log(error);
-    }
-    
-    
-}
-// Listen for messages
-socket.addEventListener("message", (event) => {
-    document.getElementsByTagName("body")[0].style.background="purple"
-
-    console.log("Message from server ", event.data);
-    document.getElementById("two").value = event.data
-});
+version https://git-lfs.github.com/spec/v1
+oid sha256:f79b73b89fbbe1711f60f06b996ad3c9ca4be075cfdedde0b0c8f5c26e4fcad1
+size 869

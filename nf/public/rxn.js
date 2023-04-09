@@ -1,23 +1,3 @@
-import  { Greeting }  from "./retwo.js";
-
-const { useState } = React;
-
-function FavoriteColor() {
-    const [color, setColor] = useState("red");
-
-    return <h1>My favorite color is {color}!</h1>
-}
-
-
-// Render the component to the DOM  
-function MyApp() {
-    return  (
-        <div>hello!</div>)
-    
-       
-
-}
-
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
-root.render(<MyApp />);
+version https://git-lfs.github.com/spec/v1
+oid sha256:17050f532b70d3a797c66a8a4efca1690691214ab5bb9955d170eb79382dc3a6
+size 434

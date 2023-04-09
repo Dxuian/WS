@@ -1,11 +1,3 @@
-var data = {
-    name:"unnat",
-    sirname:"bharol",
-    age:20,
-    ln:5,
-    innerdata:{name:"un",
-    sirname:"bh",
-    age:2,
-    ln:54}
-}
-module.exports = data ; 
+version https://git-lfs.github.com/spec/v1
+oid sha256:82ee199b38b2bd4a8dabc66ac251075055c2999c1e67e77404ed644e34279fe1
+size 167
