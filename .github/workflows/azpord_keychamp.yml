@@ -18,6 +18,9 @@ jobs:
         with:
           lfs: true
       
+      - name: Set up Azure CLI
+        uses: azure/setup-azure-cli@v1
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
