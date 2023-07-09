@@ -26,7 +26,6 @@
 /nf/node_modules/.bin/uuid filter=lfs diff=lfs merge=lfs -text
 /nf/node_modules/@fastify/accept-negotiator/LICENSE filter=lfs diff=lfs merge=lfs -text
 *.ts filter=lfs diff=lfs merge=lfs -text
-*.yml filter=lfs diff=lfs merge=lfs -text
 *.taprc filter=lfs diff=lfs merge=lfs -text
 /nf/node_modules/@fastify/ajv-compiler/LICENSE filter=lfs diff=lfs merge=lfs -text
 *.mjs filter=lfs diff=lfs merge=lfs -text
