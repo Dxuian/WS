@@ -19,7 +19,7 @@ jobs:
           lfs: true
 
       - name: Set up Azure CLI
-        uses: azure/setup-azure-cli@v1
+        uses: azure/setup-azure-cli@v2
 
       - name: Login to Azure
         uses: azure/login@v1
@@ -36,7 +36,7 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-        working-directory: './nf' 
+        working-directory: './nf'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
