@@ -61,4 +61,5 @@ jobs:
           app-name: 'keychamp'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_20b263040db444bb9a958b35ac73d947 }}
+          app-settings: WEBSITE_NODE_DEFAULT_VERSION=18.13.0
           package: .
