@@ -12,13 +12,17 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v2
+        with:
+         lfs: true
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
+
       - name: npm install, build, and test
         run: |
           npm install
@@ -26,6 +30,7 @@ jobs:
           npm run test --if-present
         working-directory: './nf'
 
+      
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -44,11 +49,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'keychamp'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_94a04f2fa3cb4f0eb0f5d85d5a851b11 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_0d30e2cbd9704ed1b089246be19bc70f }}
           package: .
