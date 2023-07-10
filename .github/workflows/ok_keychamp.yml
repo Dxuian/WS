@@ -55,5 +55,5 @@ jobs:
         with:
           app-name: 'keychamp'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_4844e53ddcd84166a38199e245b43aae }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_5af4e48a61234def9b8845955c428afe }}
           package: .
