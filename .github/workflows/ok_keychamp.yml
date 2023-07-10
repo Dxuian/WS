@@ -14,12 +14,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-         lfs: true
-      - name: Login via Azure CLI
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
@@ -44,6 +38,7 @@ jobs:
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
@@ -55,5 +50,5 @@ jobs:
         with:
           app-name: 'keychamp'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_5af4e48a61234def9b8845955c428afe }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_94a04f2fa3cb4f0eb0f5d85d5a851b11 }}
           package: .
