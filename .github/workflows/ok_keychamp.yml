@@ -2,7 +2,8 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 #added credentials
 #updated credentials 7
-#added publish profile
+#added publish profile 
+#added enable oryx build
 name: Build and deploy Node.js app to Azure Web App - keychamp
 
 on:
