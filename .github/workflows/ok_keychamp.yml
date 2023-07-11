@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 #added credentials
-#updated credentials 6
+#updated credentials 7
 name: Build and deploy Node.js app to Azure Web App - keychamp
 
 on:
@@ -28,9 +28,24 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: npm install, build, and test
+      - name: npm install sqlite3
+        run: npm install sqlite3
+        working-directory: './nf'
+
+      - name: npm install fastify-sqlite
+        run: npm install fastify-sqlite
+        working-directory: './nf'
+
+      - name: npm install
+        run: npm install
+        working-directory: './nf'
+
+      - name: npm rebuild
+        run: npm rebuild
+        working-directory: './nf'
+
+      - name: npm build
         run: |
-          npm install
           npm run build --if-present
           npm run test --if-present
         working-directory: './nf'
