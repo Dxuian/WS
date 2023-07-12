@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Clean build cache
+        run: rm -rf node_modules
+
       - name: npm install sqlite3
         run: npm install sqlite3
         working-directory: './nf'
