@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6027f845f1fafa29b7580347adcf36cfd4df5bcb24cf70aada0c4a96260282b3
-size 593
+import {LitElement, html ,css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
+
+
+class Conectfail extends LitElement {
+  createRenderRoot() {
+    return this;
+  }
+  
+  render() {
+    return html`
+    <div id="conectfail" class="bg-red-600 p-24 z-50  mt-44 absolute rounded-3 text-2xl font-black text-red-300">
+    Connection failed
+    <div class="text-black text-justify text-xl">check your internet connection or <br>
+        retry entering the correct lobby code</div>
+    </div>
+     
+    `;
+  }
+}
+customElements.define('conectfail-non', Conectfail);

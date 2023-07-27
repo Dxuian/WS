@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:85c6852c00bb0a70bc38997c13e0f67abd4a6f82877ec0daa2a57b240608492a
-size 305
+{
+    "version": "1.0.0",
+    "name": "fastify-api",
+    "dependencies": {
+        "@fastify/cookie": {
+            "version": "8.3.0"
+        },
+        "@fastify/swagger-ui": {
+            "version": "1.5.0"
+        },
+        "fastify": {
+            "version": "4.15.0"
+        }
+    }
+}

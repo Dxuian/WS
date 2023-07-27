@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b4a26ee33d6bdfd40ee5be5e24a0d81d5f3a5eb5fdd2e09985848ac231def104
-size 214
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/2424d916-104e-42c9-b354-8cadddc61d85/resourceGroups/KeychampQS-rg/providers/Microsoft.Web/sites/Keychamp",
+    "appService.deploySubpath": "."
+}

@@ -1,3 +1,127 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b0def9ecbad23a389f81e11357b027bd3227932129afdb25f2ea571454de3661
-size 1999
+@font-face {
+  font-family: "sfpro";
+  src: url("SFPRODISPLAYREGULAR.OTF");
+}
+
+.sfpro {
+  font-family: "sfpro";
+}
+
+* {
+  text-align: center;
+
+}
+
+
+
+.wholesite {
+  background: black !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow-x: hidden !important;
+}
+
+board-non
+{
+  display: inline-flex;
+}
+#gamestleftpanel {
+  transition: opacity 1s;
+}
+
+/* chatgptanimations Remove startertext div */
+#colap {
+  transition: opacity 1s;
+}
+
+#conectfail {
+  margin-left: 30rem;
+}
+
+#finisher {
+  color: white;
+  font-size: large;
+}
+
+.ri-trophy-fill {
+  font-size: 48px;
+  background: black;
+  color: rgb(192, 185, 185);
+}
+
+.ri-trophy-fill:hover {
+  color: rgba(255, 255, 0, 0.784)
+}
+
+.ri-trophy-fill:active {
+  color: gold  !important;
+}
+
+/* .bg-silver {
+  background: url("https://eandt.theiet.org/media/16194/diamond-texture.jpg?anchor=center&mode=crop&width=1200&height=450&rnd=132695307800000000") !important ;
+} */
+
+.bg-gold {
+  background: url("https://images.pexels.com/photos/122458/pexels-photo-122458.jpeg?cs=srgb&dl=pexels-fwstudio-122458.jpg&fm=jpg");
+}
+
+.bg-bronze {
+  background: url("https://wallpaperaccess.com/full/3599863.png");
+}
+
+ .bg-silver {
+  background: url("./silver.jpg") !important ;
+}
+/*
+.bg-gold {
+  background: url("./gold.jpg");
+}
+.bg-bronze {
+  background: url("./bronze.jpg");
+} */
+
+.text-bronze {
+  color: #FFC800 !important;
+}
+#highestofall,#higher
+{
+  z-index: 999;
+  background-color: #480a4f;
+}
+#headingleft, #headingleft2
+{
+  text-align: left !important; 
+}
+.headinglefts 
+{
+  text-align: left !important; 
+}
+.colorizedby
+{
+  color:#F700C1 !important ; 
+}
+
+
+ #container:has(#discord-icon:hover)     {
+  background-color: rgb(79, 70, 229); /* Equivalent to Tailwind CSS color "purple-900" */
+}
+
+#container:has(#github-icon:hover)     {
+  background-color: rgb(255, 255, 255); /* Equivalent to Tailwind CSS color "white" */
+}
+
+#container:has(#mail-icon:hover)    {
+  background-color: red; /* Equivalent to Tailwind CSS color "red-900" */
+}
+
+
+
+
+
+
+
+
+
+
+
+
