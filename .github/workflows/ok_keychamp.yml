@@ -5,7 +5,7 @@
 #added publish profile 
 #added enable oryx build
 #cleaned up kudu files
-#made new web app
+#made new web apps
 #del some filesssss
 name: Build and deploy Node.js app to Azure Web App - keychamp
 
