@@ -7,6 +7,7 @@
 #cleaned up kudu files
 #made new web apps
 #del some filessssss
+#rmed lfs 
 name: Build and deploy Node.js app to Azure Web App - keychamp
 
 on:
